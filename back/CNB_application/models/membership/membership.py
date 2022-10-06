@@ -6,6 +6,7 @@ from peewee import DateTimeField
 from peewee import Model
 from peewee import PrimaryKeyField
 from peewee import ForeignKeyField
+from typing import Optional
 
 from CNB_application.exceptions import *
 from CNB_application.models.membership import Family
@@ -33,15 +34,24 @@ class Membership(Model):
             self.date_end = datetime.date(self.date_start.year, 12, 31)
         else:
             self.date_end = self.date_start + datetime.timedelta(days=6)
+        self.save()
 
-    def update_membership_date(self, date_start: str):
-        try:
-            date_start = datetime.datetime.strptime(date_start, "%Y-%m-%d")
-            self.date_start = date_start
-            self.set_end_date()
-            self.save()
-        except (ValueError, TypeError):
-            raise InvalidDateFormat
+    def update_membership(
+        self, membership_type: Optional[str], date_start: Optional[str]
+    ):
+        if membership_type:
+            if membership_type in MembershipType:
+                self.membership_type = membership_type
+            else:
+                raise MembershipTypeNotFound
+        if date_start:
+            try:
+                date_start = datetime.datetime.strptime(date_start, "%Y-%m-%d")
+                self.date_start = date_start
+                self.set_end_date()
+            except (ValueError, TypeError):
+                raise InvalidDateFormat
+        self.save()
 
     def verify_membership_status(self, date_event: str) -> bool:
         try:

@@ -68,6 +68,11 @@ class EmailRequired(UserError):
         UserError.__init__(self, "Email is required", 400)
 
 
+class MembershipTypeNotFound(UserError):
+    def __init__(self):
+        UserError.__init__(self, "Membership type not found", 400)
+
+
 class FirstNameRequired(UserError):
     def __init__(self):
         UserError.__init__(self, "First name is required", 400)
