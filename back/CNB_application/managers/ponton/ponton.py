@@ -1,8 +1,10 @@
 from peewee import DoesNotExist
+from datetime import datetime
+from typing import Optional
 
 from CNB_application.exceptions import *
 from CNB_application.models.ponton.ponton import Ponton
-from CNB_application.models.membership.membership import Membership
+from CNB_application.models.membership import Family
 
 
 def get_ponton(ponton_id: str) -> Ponton:
@@ -60,25 +62,30 @@ def get_pontons_by_family(family_id: str) -> list[Ponton]:
     return pontons
 
 
-def update_boat_size(ponton_id: str, boat_size: int) -> Ponton:
-    ponton = get_ponton(ponton_id)
-    ponton.boat_size = boat_size
-    ponton.save()
-    return ponton
+def create_ponton(
+    family: Family, boat_size: int, date_start: str, date_end: str
+) -> Ponton:
+    try:
+        date_start = datetime.strptime(date_start, "%Y-%m-%d")
+        date_end = datetime.strptime(date_end, "%Y-%m-%d")
+    except (ValueError, TypeError):
+        raise InvalidDateFormat
+    ponton_object = Ponton.create(
+        family=family, boat_size=boat_size, date_start=date_start, date_end=date_end
+    )
+    ponton_object.save()
+    return ponton_object
 
 
-def update_ponton_date(
-    ponton_id: str, date_start: str, date_end: str, family_id: str
+def update_ponton(
+    ponton_id: str,
+    boat_size: Optional[int],
+    date_start: Optional[str],
+    date_end: Optional[str],
 ) -> Ponton:
     ponton = get_ponton(ponton_id)
-    query = Membership.select().where((Membership.family.id == family_id))
-    for membership in query:
-        if membership.verify_membership_status(
-            date_start
-        ) and membership.verify_membership_status(date_end):
-            ponton.update_ponton_date(date_start, date_end)
-            return ponton
-    raise NoMembershipForSelectedDate
+    ponton.update_ponton(boat_size=boat_size, date_start=date_start, date_end=date_end)
+    return ponton
 
 
 def delete_ponton(ponton_id: str) -> bool:
