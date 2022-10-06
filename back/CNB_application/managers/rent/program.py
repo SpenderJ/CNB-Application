@@ -1,9 +1,12 @@
 from peewee import DoesNotExist
 from typing import Optional
+from datetime import datetime
 
 from CNB_application.exceptions import *
 from CNB_application.models.rent.program import SailingProgram
-from CNB_application.models.membership.membership import Membership
+from CNB_application.models.rent.program import SailingProgramType
+from CNB_application.models.membership import Membership
+from CNB_application.models.membership import Family
 
 
 def get_program(program_id: str) -> SailingProgram:
@@ -34,12 +37,9 @@ def get_all_programs() -> list[SailingProgram]:
     return programs
 
 
-def get_programs_by_family(first_name: str, last_name: str) -> list[SailingProgram]:
+def get_programs_by_family(family_id: str) -> list[SailingProgram]:
     programs = []
-    query = SailingProgram.select().where(
-        (SailingProgram.family.first_name == first_name)
-        & (SailingProgram.family.last_name == last_name)
-    )
+    query = SailingProgram.select().where(SailingProgram.family.id == family_id)
 
     if len(query == 0):
         raise UserNotFound
@@ -50,13 +50,31 @@ def get_programs_by_family(first_name: str, last_name: str) -> list[SailingProgr
         )
     logger.debug(
         "Get all programs for family {}. Number of programs : {}".format(
-            last_name, len(programs)
+            family.last_name, len(programs)
         )
     )
     return programs
 
 
-def update_program_type(
+def create_program(
+    family: Family, sailing_program: str, date_start: str
+) -> SailingProgram:
+    try:
+        date_start = datetime.strptime(date_start, "%Y-%m-%d")
+    except (ValueError, TypeError):
+        raise InvalidDateFormat
+    if sailing_program and sailing_program not in SailingProgramType:
+        raise RentingTypeNotFound
+    program_object = SailingProgram.create(
+        family=family,
+        sailing_program=sailing_program,
+        date_start=date_start,
+    )
+    program_object.save()
+    return program_object
+
+
+def update_program(
     program_id: str, sailing_program: Optional[str], date_start: Optional[str]
 ) -> SailingProgram:
     program = get_program(program_id)

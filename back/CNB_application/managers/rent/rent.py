@@ -59,7 +59,7 @@ def get_rents_by_family(family_id: str) -> list[Rent]:
     return rents
 
 
-def create_ponton(
+def create_rent(
     family: Family, renting_type: str, date: str, time_in_minutes: int
 ) -> Rent:
     try:

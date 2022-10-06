@@ -34,7 +34,7 @@ class Ponton(Resource):
     def post(self):
         family_id = request.args.get("family_id")
         family_object = family.get_family_via_id(family_id=family_id)
-        rent_object = rent.create_ponton(
+        rent_object = rent.create_rent(
             family=family_object,
             renting_type=request.args.get("renting_type"),
             date=request.args.get("date"),
