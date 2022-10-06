@@ -2,6 +2,7 @@ from flask import request
 from flask_restful import Resource
 
 from CNB_application.auth import authenticated
+from CNB_application.exceptions import *
 from CNB_application.managers.membership import family
 from CNB_application.managers.address import address
 
@@ -25,7 +26,10 @@ class Address(Resource):
 
     @authenticated
     def post(self):
-        family_object = family.get_family_via_id(family_id=request.args.get('family_id'))
+        family_id = request.args.get('family_id')
+        if family.get_family_via_id(family_id=family_id).address:
+            raise AddressAlreadyCreatedForThisAccount
+        family_object = family.get_family_via_id(family_id=family_id)
         address.create_address(family=family_object,
                                address=request.args.get('address'),
                                city=request.args.get('city'),

@@ -1,7 +1,9 @@
 from peewee import DoesNotExist
+from typing import Optional
 
 from CNB_application.exceptions import *
 from CNB_application.models.drink.drink import Drink
+from CNB_application.models.membership.family import Family
 
 
 def get_drink_card(family_id: str) -> Drink:
@@ -24,15 +26,23 @@ def get_all_drink_cards() -> list[Drink]:
     return drinks
 
 
-def update_number_of_drink(family_id: str, drinks_left: int) -> Drink:
-    drink = get_drink_card(family_id)
-    drink.drinks_left = drinks_left
-    drink.save()
-    return drink
+def create_drink(family: Family, drinks_left: Optional[int] = 0, number_of_card: Optional[int] = 0) -> Drink:
+    drink_card = Drink.create(family=family,
+                              drinks_left=drinks_left,
+                              number_of_card=number_of_card)
+    drink_card.save()
+    return Drink
 
 
-def update_number_of_card(family_id: str, number_of_card: int) -> Drink:
-    drink = get_drink_card(family_id)
-    drink.number_of_card = number_of_card
-    drink.save()
-    return drink
+def update_drink(family_id: str, drinks_left: Optional[int], number_of_card: Optional[int]) -> Drink:
+    drink_card = get_drink_card(family_id)
+    drink_card.update_drink_card(drinks_left, number_of_card)
+    return drink_card
+
+
+def delete_drink(family: Family) -> bool:
+    try:
+        family.drink.delete_instance(recursive=True)
+        return True
+    except DoesNotExist:
+        raise AddressNotFound

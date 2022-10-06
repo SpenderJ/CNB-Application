@@ -86,6 +86,16 @@ class NoMembershipForSelectedDate(UserError):
         UserError.__init__(self, "No active membership at the given date for the family", 400)
 
 
+class AddressAlreadyCreatedForThisAccount(UserError):
+    def __init__(self):
+        UserError.__init__(self, 'Address already created for this family', 400)
+
+
+class DrinkCardAlreadyCreatedForThisAccount(UserError):
+    def __init__(self):
+        UserError.__init__(self, 'DrinkCard already created for this family', 400)
+
+
 class InvalidRentingType(UserError):
     def __init__(self):
         UserError.__init__(self, "Renting type is invalid", 400)

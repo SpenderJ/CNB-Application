@@ -1,7 +1,6 @@
 from peewee import DoesNotExist
 from typing import Optional
 
-
 from CNB_application.exceptions import *
 from CNB_application.models.membership.family import Family
 

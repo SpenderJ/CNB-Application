@@ -36,7 +36,7 @@ def update_address(family_id: str, address: Optional[str], city: Optional[str], 
     return address_object
 
 
-def create_address(family: str, address: str, city: str, zip_code: int, country: str) -> Address:
+def create_address(family: Family, address: str, city: str, zip_code: int, country: str) -> Address:
     address_object = Address.create(family=family,
                                     address=address,
                                     city=city,
