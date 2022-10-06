@@ -63,7 +63,7 @@ def create_ponton(
     family: Family, renting_type: str, date: str, time_in_minutes: int
 ) -> Rent:
     try:
-        date_start = datetime.strptime(date, "%Y-%m-%d")
+        date = datetime.strptime(date, "%Y-%m-%d")
     except (ValueError, TypeError):
         raise InvalidDateFormat
     if renting_type and renting_type not in RentingType:
