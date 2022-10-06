@@ -27,23 +27,30 @@ class RentingType(str, enum.Enum):
 
 class Rent(Model):
     id = PrimaryKeyField()
-    family = ForeignKeyField(Family, backref='rents')
+    family = ForeignKeyField(Family, backref="rents")
     renting_type = CharField()
     date = DateTimeField()
     time_in_minutes = IntegerField()
 
-    def update_rent(self, renting_type: Optional[str], date: Optional[str], time_in_minutes: Optional[str]):
+    def update_rent(
+        self,
+        renting_type: Optional[str],
+        date: Optional[str],
+        time_in_minutes: Optional[str],
+    ):
         if renting_type and renting_type in RentingType:
             self.renting_type = renting_type
         else:
             raise InvalidRentingType
         if date:
             try:
-                date = datetime.strptime(date, '%Y-%m-%d')
+                date = datetime.strptime(date, "%Y-%m-%d")
                 self.date = date
             except (ValueError, TypeError):
                 raise InvalidDateFormat
-        self.time_in_minutes = time_in_minutes if time_in_minutes else self.time_in_minutes
+        self.time_in_minutes = (
+            time_in_minutes if time_in_minutes else self.time_in_minutes
+        )
         self.save()
 
     def get_data(self):

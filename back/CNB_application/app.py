@@ -20,7 +20,7 @@ def create_app(api=True):
         register_api(app)
 
     app.config.from_object(rq_dashboard.default_settings)
-    app.config['REDIS_URL'] = REDIS_URL
+    app.config["REDIS_URL"] = REDIS_URL
     app.register_blueprint(rq_dashboard.blueprint, url_prefix="/jobs")
 
     return app

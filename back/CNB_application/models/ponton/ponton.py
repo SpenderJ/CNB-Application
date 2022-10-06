@@ -14,7 +14,7 @@ from CNB_application.core import db
 
 class Ponton(Model):
     id = PrimaryKeyField()
-    family = ForeignKeyField(Family, backref='pontons')
+    family = ForeignKeyField(Family, backref="pontons")
     date_start = DateTimeField()
     date_end = DateTimeField()
     boat_size = IntegerField()
@@ -24,8 +24,8 @@ class Ponton(Model):
 
     def update_ponton_date(self, date_start: str, date_end: str):
         try:
-            date_start = datetime.strptime(date_start, '%Y-%m-%d')
-            date_end = datetime.strptime(date_end, '%Y-%m-%d')
+            date_start = datetime.strptime(date_start, "%Y-%m-%d")
+            date_end = datetime.strptime(date_end, "%Y-%m-%d")
             self.date_start = date_start
             self.date_end = date_end
             self.save()

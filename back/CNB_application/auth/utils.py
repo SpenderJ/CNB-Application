@@ -11,10 +11,14 @@ def authenticated(fn):
     def wrapper(*args, **kwargs):
         verify_jwt_in_request()
         me = get_jwt_identity()
-        user = me.get('email')
+        user = me.get("email")
         if user is None:
-            user = me.get('id')
-        logger.info('[Request] Path : {} {} | User : {}'.format(request.method, request.full_path, user))
+            user = me.get("id")
+        logger.info(
+            "[Request] Path : {} {} | User : {}".format(
+                request.method, request.full_path, user
+            )
+        )
         return fn(*args, **kwargs)
 
     return wrapper

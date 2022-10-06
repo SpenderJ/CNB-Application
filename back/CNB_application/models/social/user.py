@@ -21,12 +21,17 @@ class User(Model):
     created_at = DateTimeField()
 
     def get_identity(self):
-        return {"id": self.id, "first_name": self.first_name, "last_name": self.last_name, "picture": self.picture,
-                "email": self.email}
+        return {
+            "id": self.id,
+            "first_name": self.first_name,
+            "last_name": self.last_name,
+            "picture": self.picture,
+            "email": self.email,
+        }
 
     def get_data(self):
         identity = self.get_identity()
-        identity['name'] = "{} {}".format(self.first_name, self.last_name)
+        identity["name"] = "{} {}".format(self.first_name, self.last_name)
         return identity, self.account_activated, self.first_login
 
     class Meta:

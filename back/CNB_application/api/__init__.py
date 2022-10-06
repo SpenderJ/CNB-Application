@@ -6,14 +6,16 @@ from flask_restful import Api
 from CNB_application.api.errors import register_errors
 from CNB_application.core import logger, db
 
-api_bp = Blueprint('api', __name__)
+api_bp = Blueprint("api", __name__)
 
 
 class AdvancedApi(Api):
     def handle_error(self, e):
         for val in current_app.error_handler_spec.values():
             for handler in val.values():
-                registered_error_handlers = list(filter(lambda x: isinstance(e, x), handler.keys()))
+                registered_error_handlers = list(
+                    filter(lambda x: isinstance(e, x), handler.keys())
+                )
                 if len(registered_error_handlers) > 0:
                     raise e
         return super().handle_error(e)
@@ -32,7 +34,11 @@ def register_api(app):
     def after_request(exception=None):
         db.close()
         diff = time.time() - g.start
-        logger.info('[Request time] Path : {} {} | Time : {}s'.format(request.method, request.full_path, diff))
+        logger.info(
+            "[Request time] Path : {} {} | Time : {}s".format(
+                request.method, request.full_path, diff
+            )
+        )
 
     import CNB_application.api.address
     import CNB_application.api.membership
@@ -43,4 +49,4 @@ def register_api(app):
 
     app.register_blueprint(api_bp, url_prefix="/api/v1")
 
-    logger.debug('Blueprints successfully registered.')
+    logger.debug("Blueprints successfully registered.")

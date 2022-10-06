@@ -30,7 +30,9 @@ class Drink(Model):
         self.drinks_left += 10
         self.save()
 
-    def update_drink_card(self, drinks_left: Optional[int], number_of_card: Optional[int]):
+    def update_drink_card(
+        self, drinks_left: Optional[int], number_of_card: Optional[int]
+    ):
         self.drinks_left = drinks_left if drinks_left else self.drinks_left
         self.number_of_card = number_of_card if number_of_card else self.number_of_card
         self.save()

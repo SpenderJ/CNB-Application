@@ -9,10 +9,10 @@ class APIError(Exception):
         self.message = message
         if status_code is not None:
             self.status_code = status_code
-        logger.warning('{} error : {}'.format(prefix, message))
+        logger.warning("{} error : {}".format(prefix, message))
 
     def to_dict(self):
-        return {'error': self.message}
+        return {"error": self.message}
 
 
 from .users import *

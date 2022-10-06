@@ -20,28 +20,44 @@ def get_all_addresses() -> list[Address]:
 
     for addresses in query:
         family, address, city, zip_code, country = addresses.get_data()
-        addresses.append({'family': family, 'address': address, 'city': city, 'zip_code': zip_code, 'country': country})
-    logger.debug('Get all address objects from db. Number of address objects : {}'.format(len(addresses)))
+        addresses.append(
+            {
+                "family": family,
+                "address": address,
+                "city": city,
+                "zip_code": zip_code,
+                "country": country,
+            }
+        )
+    logger.debug(
+        "Get all address objects from db. Number of address objects : {}".format(
+            len(addresses)
+        )
+    )
 
     return addresses
 
 
-def update_address(family_id: str, address: Optional[str], city: Optional[str], zip_code: Optional[int],
-                   country: Optional[str]) -> Address:
+def update_address(
+    family_id: str,
+    address: Optional[str],
+    city: Optional[str],
+    zip_code: Optional[int],
+    country: Optional[str],
+) -> Address:
     address_object = get_address(family_id)
-    address_object.update_address(address=address,
-                                  city=city,
-                                  zip_code=zip_code,
-                                  country=country)
+    address_object.update_address(
+        address=address, city=city, zip_code=zip_code, country=country
+    )
     return address_object
 
 
-def create_address(family: Family, address: str, city: str, zip_code: int, country: str) -> Address:
-    address_object = Address.create(family=family,
-                                    address=address,
-                                    city=city,
-                                    zip_code=zip_code,
-                                    country=country)
+def create_address(
+    family: Family, address: str, city: str, zip_code: int, country: str
+) -> Address:
+    address_object = Address.create(
+        family=family, address=address, city=city, zip_code=zip_code, country=country
+    )
     address_object.save()
     return address_object
 

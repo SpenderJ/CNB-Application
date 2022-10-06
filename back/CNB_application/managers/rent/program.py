@@ -20,8 +20,16 @@ def get_all_programs() -> list[SailingProgram]:
 
     for program in query:
         family, sailing_program, date_start = program.get_data()
-        programs.append({'family': family, 'sailing_program': sailing_program, 'date_start': date_start})
-    logger.debug('Get all programs from db. Number of programs : {}'.format(len(programs)))
+        programs.append(
+            {
+                "family": family,
+                "sailing_program": sailing_program,
+                "date_start": date_start,
+            }
+        )
+    logger.debug(
+        "Get all programs from db. Number of programs : {}".format(len(programs))
+    )
 
     return programs
 
@@ -29,25 +37,33 @@ def get_all_programs() -> list[SailingProgram]:
 def get_programs_by_family(first_name: str, last_name: str) -> list[SailingProgram]:
     programs = []
     query = SailingProgram.select().where(
-        (SailingProgram.family.first_name == first_name) &
-        (SailingProgram.family.last_name == last_name))
+        (SailingProgram.family.first_name == first_name)
+        & (SailingProgram.family.last_name == last_name)
+    )
 
     if len(query == 0):
         raise UserNotFound
     for program in query:
         family, sailing_program, date_start = program.get_data()
-        programs.append({'family': family, 'renting_type': sailing_program, 'date': date_start})
-    logger.debug('Get all programs for family {}. Number of programs : {}'.format(last_name, len(programs)))
+        programs.append(
+            {"family": family, "renting_type": sailing_program, "date": date_start}
+        )
+    logger.debug(
+        "Get all programs for family {}. Number of programs : {}".format(
+            last_name, len(programs)
+        )
+    )
     return programs
 
 
-def update_program_type(program_id: str, sailing_program: Optional[str], date_start: Optional[str]) -> SailingProgram:
+def update_program_type(
+    program_id: str, sailing_program: Optional[str], date_start: Optional[str]
+) -> SailingProgram:
     program = get_program(program_id)
     if sailing_program:
         program.update_sailing_program(sailing_program)
     if date_start:
-        query = Membership.select().where(
-            (Membership.family.id == program.family.id))
+        query = Membership.select().where((Membership.family.id == program.family.id))
         for membership in query:
             if membership.verify_membership_status(date_start):
                 program.update_program_date(date_start)

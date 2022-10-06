@@ -18,8 +18,13 @@ class Address(Model):
     zip_code = IntegerField()
     country = CharField()
 
-    def update_address(self, address: Optional[str], city: Optional[str], zip_code: Optional[int],
-                       country: Optional[str]):
+    def update_address(
+        self,
+        address: Optional[str],
+        city: Optional[str],
+        zip_code: Optional[int],
+        country: Optional[str],
+    ):
         self.address = address if address else self.address
         self.city = city if city else self.city
         self.zip_code = zip_code if zip_code else self.zip_code

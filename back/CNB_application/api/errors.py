@@ -14,13 +14,19 @@ def register_errors(api):
 
     @api.errorhandler(DoesNotExist)
     def handle_invalid_usage(error):
-        resource = error.args[0].split('>')[0].split(' ')[1]
+        resource = error.args[0].split(">")[0].split(" ")[1]
         response = jsonify({"msg": "{} not found".format(resource)})
         response.status_code = 404
         return response
 
     @api.errorhandler(NotFoundError)
     def handle_invalid_usage(error):
-        response = jsonify({"msg": "{} {} not found".format(error.info['_index'].capitalize(), error.info['_id'])})
+        response = jsonify(
+            {
+                "msg": "{} {} not found".format(
+                    error.info["_index"].capitalize(), error.info["_id"]
+                )
+            }
+        )
         response.status_code = 404
         return response

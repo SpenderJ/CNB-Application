@@ -11,7 +11,7 @@ class Jobs(Resource):
     def get(self):
         pending = queue.get_job_ids()
 
-        registry = StartedJobRegistry('default', connection=broker)
+        registry = StartedJobRegistry("default", connection=broker)
         started = registry.get_job_ids()
 
         fail_queue = FailedJobRegistry(connection=broker)
@@ -26,9 +26,9 @@ class Job(Resource):
         job = queue.fetch_job(job_id)
         answer = {"failed": job.is_failed, "meta": job.meta}
         if job.is_failed and job.exc_info is not None:
-            answer['error'] = 'Error: {}'.format(job.exc_info.split('\n')[-2])
+            answer["error"] = "Error: {}".format(job.exc_info.split("\n")[-2])
         return answer
 
 
-api.add_resource(Jobs, '/jobs')
-api.add_resource(Job, '/jobs/<job_id>')
+api.add_resource(Jobs, "/jobs")
+api.add_resource(Job, "/jobs/<job_id>")

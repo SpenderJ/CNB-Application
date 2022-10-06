@@ -18,9 +18,19 @@ def get_all_memberships() -> list[Membership]:
 
     for membership in query:
         family, membership_type, date_start, date_end = membership.get_data()
-        memberships.append({'family': family, 'membership_type': membership_type, 'date_start': date_start,
-                            'date_end': date_end})
-    logger.debug('Get all memberships from db. Number of memberships : {}'.format(len(memberships)))
+        memberships.append(
+            {
+                "family": family,
+                "membership_type": membership_type,
+                "date_start": date_start,
+                "date_end": date_end,
+            }
+        )
+    logger.debug(
+        "Get all memberships from db. Number of memberships : {}".format(
+            len(memberships)
+        )
+    )
 
     return memberships
 
@@ -28,16 +38,27 @@ def get_all_memberships() -> list[Membership]:
 def get_memberships_by_family(first_name: str, last_name: str) -> list[Membership]:
     memberships = []
     query = Membership.select().where(
-        (Membership.family.first_name == first_name) &
-        (Membership.family.last_name == last_name))
+        (Membership.family.first_name == first_name)
+        & (Membership.family.last_name == last_name)
+    )
 
     if len(query == 0):
         raise UserNotFound
     for membership in query:
         family, membership_type, date_start, date_end = membership.get_data()
-        memberships.append({'family': family, 'membership_type': membership_type, 'date_start': date_start,
-                            'date_end': date_end})
-    logger.debug('Get all memberships for family {}. Number of memberships : {}'.format(last_name, len(memberships)))
+        memberships.append(
+            {
+                "family": family,
+                "membership_type": membership_type,
+                "date_start": date_start,
+                "date_end": date_end,
+            }
+        )
+    logger.debug(
+        "Get all memberships for family {}. Number of memberships : {}".format(
+            last_name, len(memberships)
+        )
+    )
     return memberships
 
 

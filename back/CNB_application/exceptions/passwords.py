@@ -3,7 +3,7 @@ from CNB_application.exceptions import APIError
 
 class PasswordError(APIError):
     def __init__(self, message, status_code=None):
-        APIError.__init__(self, 'Passwords', message, status_code)
+        APIError.__init__(self, "Passwords", message, status_code)
 
 
 class EmailPasswordMismatch(PasswordError):
@@ -23,4 +23,6 @@ class PasswordTooShort(PasswordError):
 
 class SamePasswords(PasswordError):
     def __init__(self):
-        PasswordError.__init__(self, "Old password and new password must be different", 400)
+        PasswordError.__init__(
+            self, "Old password and new password must be different", 400
+        )

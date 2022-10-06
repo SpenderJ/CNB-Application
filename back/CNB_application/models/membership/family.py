@@ -24,27 +24,45 @@ class Family(Model):
     def drink(self):
         return self.drink_set.get()
 
-    def update_family(self, first_name: Optional[str], last_name: Optional[str], email: Optional[str],
-                      phone_number: Optional[str], benefactor_member: Optional[bool], parking: Optional[bool]):
+    def update_family(
+        self,
+        first_name: Optional[str],
+        last_name: Optional[str],
+        email: Optional[str],
+        phone_number: Optional[str],
+        benefactor_member: Optional[bool],
+        parking: Optional[bool],
+    ):
         self.first_name = first_name if first_name else self.first_name
         self.last_name = last_name if last_name else self.last_name
         self.email = email if email else self.email
         self.phone_number = phone_number if phone_number else self.phone_number
-        self.benefactor_member = benefactor_member if benefactor_member else self.benefactor_member
+        self.benefactor_member = (
+            benefactor_member if benefactor_member else self.benefactor_member
+        )
         self.parking = parking if parking else self.parking
         self.save()
 
     def get_data(self):
-        return self.first_name, self.last_name, self.email, self.phone_number, self.benefactor_member, self.parking
+        return (
+            self.first_name,
+            self.last_name,
+            self.email,
+            self.phone_number,
+            self.benefactor_member,
+            self.parking,
+        )
 
     def get_family(self):
-        return {"first_name": self.first_name, "last_name": self.last_name, "email": self.email,
-                "phone_number": self.phone_number}
+        return {
+            "first_name": self.first_name,
+            "last_name": self.last_name,
+            "email": self.email,
+            "phone_number": self.phone_number,
+        }
 
     class Meta:
-        indexes = (
-            (('first_name', 'last_name'), True),
-        )
+        indexes = ((("first_name", "last_name"), True),)
         database = db
 
 

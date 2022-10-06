@@ -21,7 +21,7 @@ class SailingProgramType(str, enum.Enum):
 
 class SailingProgram(Model):
     id = PrimaryKeyField()
-    family = ForeignKeyField(Family, backref='rents')
+    family = ForeignKeyField(Family, backref="rents")
     date_start = DateTimeField()
     sailing_program = CharField()
 
@@ -34,7 +34,7 @@ class SailingProgram(Model):
 
     def update_program_date(self, date_start: str):
         try:
-            date_start = datetime.strptime(date_start, '%Y-%m-%d')
+            date_start = datetime.strptime(date_start, "%Y-%m-%d")
             self.date_start = date_start
             self.save()
         except (ValueError, TypeError):

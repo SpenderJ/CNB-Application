@@ -19,8 +19,15 @@ def get_all_rents() -> list[Rent]:
 
     for rent in query:
         family, renting_type, date, time_in_minutes = rent.get_data()
-        rents.append({'family': family, 'renting_type': renting_type, 'date': date, 'time_in_minutes': time_in_minutes})
-    logger.debug('Get all rents from db. Number of rents : {}'.format(len(rents)))
+        rents.append(
+            {
+                "family": family,
+                "renting_type": renting_type,
+                "date": date,
+                "time_in_minutes": time_in_minutes,
+            }
+        )
+    logger.debug("Get all rents from db. Number of rents : {}".format(len(rents)))
 
     return rents
 
@@ -28,19 +35,35 @@ def get_all_rents() -> list[Rent]:
 def get_rents_by_family(first_name: str, last_name: str) -> list[Rent]:
     rents = []
     query = Rent.select().where(
-        (Rent.family.first_name == first_name) &
-        (Rent.family.last_name == last_name))
+        (Rent.family.first_name == first_name) & (Rent.family.last_name == last_name)
+    )
 
     if len(query == 0):
         raise UserNotFound
     for rent in query:
         family, renting_type, date, time_in_minutes = rent.get_data()
-        rents.append({'family': family, 'renting_type': renting_type, 'date': date, 'time_in_minutes': time_in_minutes})
-    logger.debug('Get all rents for family {}. Number of rents : {}'.format(last_name, len(rents)))
+        rents.append(
+            {
+                "family": family,
+                "renting_type": renting_type,
+                "date": date,
+                "time_in_minutes": time_in_minutes,
+            }
+        )
+    logger.debug(
+        "Get all rents for family {}. Number of rents : {}".format(
+            last_name, len(rents)
+        )
+    )
     return rents
 
 
-def update_rent(rent_id: str, renting_type: Optional[str], date: Optional[str], time_in_minutes: Optional[str]) -> Rent:
+def update_rent(
+    rent_id: str,
+    renting_type: Optional[str],
+    date: Optional[str],
+    time_in_minutes: Optional[str],
+) -> Rent:
     rent = get_rent(rent_id)
     rent.update_rent(renting_type, date, time_in_minutes)
     return rent

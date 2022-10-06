@@ -20,7 +20,7 @@ class MembershipType(str, enum.Enum):
 
 class Membership(Model):
     id = PrimaryKeyField()
-    family = ForeignKeyField(Family, backref='memberships')
+    family = ForeignKeyField(Family, backref="memberships")
     membership_type = CharField()
     date_start = DateTimeField()
     date_end = DateTimeField()
@@ -36,7 +36,7 @@ class Membership(Model):
 
     def update_membership_date(self, date_start: str):
         try:
-            date_start = datetime.datetime.strptime(date_start, '%Y-%m-%d')
+            date_start = datetime.datetime.strptime(date_start, "%Y-%m-%d")
             self.date_start = date_start
             self.set_end_date()
             self.save()
@@ -45,7 +45,7 @@ class Membership(Model):
 
     def verify_membership_status(self, date_event: str) -> bool:
         try:
-            date_event = datetime.datetime.strptime(date_event, '%Y-%m-%d')
+            date_event = datetime.datetime.strptime(date_event, "%Y-%m-%d")
         except (ValueError, TypeError):
             raise InvalidDateFormat
         return self.date_start <= date_event <= self.date_end
