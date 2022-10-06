@@ -73,6 +73,11 @@ class MembershipTypeNotFound(UserError):
         UserError.__init__(self, "Membership type not found", 400)
 
 
+class RentingTypeNotFound(UserError):
+    def __init__(self):
+        UserError.__init__(self, "Renting type not found", 400)
+
+
 class FirstNameRequired(UserError):
     def __init__(self):
         UserError.__init__(self, "First name is required", 400)

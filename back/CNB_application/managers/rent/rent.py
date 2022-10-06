@@ -1,8 +1,11 @@
 from peewee import DoesNotExist
 from typing import Optional
+from datetime import datetime
 
 from CNB_application.exceptions import *
-from CNB_application.models.rent.rent import Rent
+from CNB_application.models.rent import Rent
+from CNB_application.models.rent import RentingType
+from CNB_application.models.membership import Family
 
 
 def get_rent(rent_id: str) -> Rent:
@@ -32,11 +35,9 @@ def get_all_rents() -> list[Rent]:
     return rents
 
 
-def get_rents_by_family(first_name: str, last_name: str) -> list[Rent]:
+def get_rents_by_family(family_id: str) -> list[Rent]:
     rents = []
-    query = Rent.select().where(
-        (Rent.family.first_name == first_name) & (Rent.family.last_name == last_name)
-    )
+    query = Rent.select().where(Rent.family.id == family_id)
 
     if len(query == 0):
         raise UserNotFound
@@ -52,10 +53,29 @@ def get_rents_by_family(first_name: str, last_name: str) -> list[Rent]:
         )
     logger.debug(
         "Get all rents for family {}. Number of rents : {}".format(
-            last_name, len(rents)
+            family.last_name, len(rents)
         )
     )
     return rents
+
+
+def create_ponton(
+    family: Family, renting_type: str, date: str, time_in_minutes: int
+) -> Rent:
+    try:
+        date_start = datetime.strptime(date, "%Y-%m-%d")
+    except (ValueError, TypeError):
+        raise InvalidDateFormat
+    if renting_type and renting_type not in RentingType:
+        raise RentingTypeNotFound
+    rent_object = Rent.create(
+        family=family,
+        renting_type=renting_type,
+        date=date,
+        time_in_minutes=time_in_minutes,
+    )
+    rent_object.save()
+    return rent_object
 
 
 def update_rent(
