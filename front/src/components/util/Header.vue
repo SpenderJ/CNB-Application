@@ -31,7 +31,7 @@
                   color="primary"
                   to="/Contact"
                   text>
-            Contact
+            Current status
           </v-btn>
         </v-scroll-x-reverse-transition>
       </v-toolbar-items>
@@ -79,9 +79,8 @@
         scrolled: false,
         displayMenu: false,
         links: [
-          {text: 'Stats', route: '/api'},
-          {text: 'On PyCharm', route: '/pycharm'},
-          {text: 'About your app', route: '/about'},
+          {text: 'Figures', route: '/api'},
+          {text: 'Members', route: '/pycharm'},
         ]
       }
     },
