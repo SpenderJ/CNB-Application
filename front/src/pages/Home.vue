@@ -74,11 +74,11 @@
             reverse: false
           },
           {
-            name: 'Manage family membership',
-            caption: 'Create or manage a family membership',
+            name: 'Create a new family membership',
+            caption: 'Create a new family membership',
             description: 'Create or manage a family membership.',
             logo: require('../assets/logos/cnb_club.jpeg'),
-            link: 'https://vuetifyjs.com/en/',
+            link: '/create-members',
             reverse: true
           },
           {

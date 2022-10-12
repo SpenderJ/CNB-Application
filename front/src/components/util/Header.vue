@@ -80,7 +80,7 @@
         displayMenu: false,
         links: [
           {text: 'Figures', route: '/api'},
-          {text: 'Members', route: '/pycharm'},
+          {text: 'Manage Members', route: '/members'},
         ]
       }
     },

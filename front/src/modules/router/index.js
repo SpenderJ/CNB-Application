@@ -7,6 +7,8 @@ const ResetPassword = () => import("../../pages/auth/ResetPassword");
 const Main = () => import("../../pages/Home");
 const About = () => import("../../pages/About");
 const Account = () => import("../../pages/Account");
+const Members = () => import("../../pages/Members");
+const CreateMembers = () => import("../../pages/CreateMembers");
 
 Vue.use(Router);
 
@@ -72,6 +74,22 @@ export default new Router({
         transparentFooter: true
       },
       component: Account
+    },
+    {
+      path: "/members",
+      name: "members",
+      meta: {
+        transparentFooter: true
+      },
+      component: Members
+    },
+    {
+      path: "/create-members",
+      name: "create-members",
+      meta: {
+        transparentFooter: true
+      },
+      component: CreateMembers
     }
   ]
 });
