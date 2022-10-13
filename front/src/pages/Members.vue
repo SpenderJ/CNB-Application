@@ -45,9 +45,9 @@
         methods: {
             validate() {
                 if (this.$refs.form.validate()) {
-                    axios.get(process.env.VUE_APP_API_URL + '/family', {first_name: this.first_name, last_name: this.last_name})
+                    axios.get(process.env.VUE_APP_API_URL + '/family',{ params: {first_name: this.first_name, last_name: this.last_name}})
                         .then(response => {
-                            notifications.addNotification(response.data);
+                            notifications.addNotification(response.data.msg);
                             this.$router.replace('/')
                         })
                         .catch(error => {

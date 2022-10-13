@@ -58,7 +58,6 @@ def create_address(
     address_object = Address.create(
         family=family, address=address, city=city, zip_code=zip_code, country=country
     )
-    address_object.save()
     return address_object
 
 

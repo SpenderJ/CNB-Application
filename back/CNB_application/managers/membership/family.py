@@ -15,8 +15,10 @@ def get_family_via_id(family_id: str) -> Family:
 
 def get_family(first_name: str, last_name: str) -> Family:
     try:
-        family = Family.get(
-            Family.first_name == first_name, Family.last_name == last_name
+        family = (
+            Family.select()
+            .where((Family.first_name == first_name) & (Family.last_name == last_name))
+            .get()
         )
         return family
     except DoesNotExist:
@@ -69,7 +71,6 @@ def create_family(
         benefactor_member=benefactor_member,
         parking=parking,
     )
-    family.save()
     return family
 
 
