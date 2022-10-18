@@ -8,6 +8,7 @@ const Main = () => import("../../pages/Home");
 const About = () => import("../../pages/About");
 const Account = () => import("../../pages/Account");
 const Members = () => import("../../pages/Members");
+const Member = () => import("../../pages/Member");
 const CreateMembers = () => import("../../pages/CreateMembers");
 
 Vue.use(Router);
@@ -82,6 +83,14 @@ export default new Router({
         transparentFooter: true
       },
       component: Members
+    },
+    {
+      path: "/members/:id",
+      name: "member",
+      meta: {
+        transparentFooter: true
+      },
+      component: Member
     },
     {
       path: "/create-members",

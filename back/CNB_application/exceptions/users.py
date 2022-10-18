@@ -33,6 +33,11 @@ class FamilyNotFound(UserError):
         UserError.__init__(self, "No family found with this combination", 404)
 
 
+class FamilyIDNotFound(UserError):
+    def __init__(self):
+        UserError.__init__(self, "No family with this ID found", 404)
+
+
 class ProgramNotFound(UserError):
     def __init__(self):
         UserError.__init__(self, "No program found with this id", 404)

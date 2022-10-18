@@ -10,7 +10,7 @@ def get_family_via_id(family_id: str) -> Family:
         family = Family.get(Family.id == family_id)
         return family
     except DoesNotExist:
-        raise FamilyNotFound
+        raise FamilyIDNotFound
 
 
 def get_family(first_name: str, last_name: str) -> Family:

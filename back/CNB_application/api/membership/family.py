@@ -11,13 +11,20 @@ from CNB_application.managers.membership import family
 from CNB_application.managers.address import address
 
 
-class Family(Resource):
+class FamilySearch(Resource):
     @authenticated
     def get(self):
         first_name = request.args.get("first_name")
         last_name = request.args.get("last_name")
         response = family.get_family(first_name=first_name, last_name=last_name)
         return {"msg": f"Family found {last_name}", "family": model_to_dict(response)}
+
+
+class Family(Resource):
+    @authenticated
+    def get(self, family_id):
+        response = family.get_family_via_id(family_id=family_id)
+        return {"family": model_to_dict(response)}
 
     @authenticated
     def post(self):

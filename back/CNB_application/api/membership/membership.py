@@ -8,16 +8,9 @@ from CNB_application.managers.membership import membership
 
 class Membership(Resource):
     @authenticated
-    def get(self):
-        membership_id = request.args.get("membership_id")
+    def get(self, membership_id):
         membership_object = membership.get_membership(membership_id=membership_id)
         return {"msg": "success", "membership": membership_object}
-
-    @authenticated
-    def get_by_family(self):
-        family_id = request.args.get("family_id")
-        membership_objects = membership.get_memberships_by_family(family_id=family_id)
-        return {"msg": "success", "memberships": membership_objects}
 
     @authenticated
     def put(self):

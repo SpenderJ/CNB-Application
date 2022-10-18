@@ -18,7 +18,7 @@
                                 <v-layout row>
                                     <v-btn class="button mx-3" to="/login" color="error" text>Cancel</v-btn>
                                     <v-spacer></v-spacer>
-                                    <v-btn class="button mx-3" @click="validate()" color="primary">Send</v-btn>
+                                    <v-btn class="button mx-3" @click="validate()" color="primary">Look up</v-btn>
                                 </v-layout>
                             </v-card-text>
                         </v-card>
@@ -48,7 +48,7 @@
                     axios.get(process.env.VUE_APP_API_URL + '/family',{ params: {first_name: this.first_name, last_name: this.last_name}})
                         .then(response => {
                             notifications.addNotification(response.data.msg);
-                            this.$router.replace('/')
+                            this.$router.replace(`/member/${response.data.family.id}`)
                         })
                         .catch(error => {
                           console.log(error)
