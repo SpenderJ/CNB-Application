@@ -2,12 +2,12 @@
     <div class="edit-member">
 
         <v-img src="../assets/cnb_background.jpeg" alt="banner" class="banner"></v-img>
-        <v-container class="create-members">
+        <v-container class="edit-members">
             <v-layout row justify-center align-center fill-height>
                 <v-flex xs12 sm6>
                     <v-hover v-slot:default="{ hover }">
                         <v-card flat id="card" class="pa-5 expand-transition" :elevation="hover ? 12 : 5">
-                            <v-card-text class="subtitle-1 pt-2 pb-0">Create a new family membership: </v-card-text>
+                            <v-card-text class="subtitle-1 pt-2 pb-0">Edit family membership: </v-card-text>
                             <v-card-text primary-title class="pt-2 pb-0 mb-2">
                                 <v-form ref="form" lazy-validation>
                                   <v-text-field outline label="First Name" v-model="first_name" required></v-text-field>
@@ -40,22 +40,18 @@
 
 <script>
     import axios from 'axios';
-    import notifications from '@/modules/notifications'
+    import notifications from '@/modules/notifications';
+    import auth from '@/modules/auth';
+    import ModifyMember from "../components/member/ModifyMember";
+    import ViewMember from "../components/member/ViewMember";
 
     export default {
         name: "Member",
+        components: {ViewMember, ModifyMember},
         data() {
           return {
-            first_name: null,
-            last_name: null,
-            email: null,
-            phone_number: null,
-            benefactor_member: false,
-            parking: false,
-            address: null,
-            city: null,
-            zip_code: null,
-            country: null,
+            loaded: false,
+            member: null,
           }
         },
         mounted() {
@@ -65,18 +61,9 @@
             getFamily() {
               axios.get(process.env.VUE_APP_API_URL + `/family/${this.$route.params.id}`)
                         .then(response => {
-                            notifications.addNotification(response.data.msg);
-                            return {
-                              first_name: response.data.user.first_name,
-                              last_name: response.data.user.last_name,
-                              email: response.data.user.email,
-                              phone_number: response.data.user.phone_number,
-                              benefactor_member: response.data.user.benefactor_member,
-                              parking: response.data.user.parking,
-                              address: response.data.user.address,
-                              city: response.data.user.city,
-                              zip_code: response.data.user.zip_code,
-                              country: response.data.user.country,
+                            if (response.data.msg === 'success') {
+                              this.member = response.data.family;
+                              this.loaded = true;
                             }
                         })
                         .catch(error => {
@@ -87,28 +74,15 @@
                           }
                         })
             },
-            validate() {
-                if (this.$refs.form.validate()) {
-                    axios.get(process.env.VUE_APP_API_URL + '/family',{ params: {first_name: this.first_name, last_name: this.last_name}})
-                        .then(response => {
-                            notifications.addNotification(response.data.msg);
-                            this.$router.replace('/')
-                        })
-                        .catch(error => {
-                          console.log(error)
-                          notifications.addNotification(error.response.data.error)
-                        })
-                }
+            updateFamily(member) {
+                this.member = member;
+                auth.getMemberInfo(this.$route.params.id)
             }
         }
     }
 </script>
 
 <style scoped>
-    .forgot-password {
-        width: 100%;
-        height: 100%
-    }
 
     #card {
         margin: 4em;

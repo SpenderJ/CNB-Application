@@ -8,6 +8,11 @@ let user = {
     firstLogin: false
 };
 
+let family = {
+    info: undefined,
+}
+
+
 
 function checkAuth() {
     return new Promise((resolve, reject) => {
@@ -45,6 +50,22 @@ function getUserInfo() {
     })
 }
 
+
+function getMemberInfo(family_id) {
+    return new Promise((resolve, reject) => {
+        axios.get(process.env.VUE_APP_API_URL + `/family/${family_id}`).then(response => {
+            if (response.status === 200) {
+                family.info = response.data.family;
+                resolve();
+            } else {
+                reject();
+            }
+        }).catch(function (error) {
+            reject();
+        });
+    })
+}
+
 function logout() {
     if (router.currentRoute.name !== 'login') {
         router.replace('/');
@@ -59,8 +80,10 @@ function logout() {
 }
 
 export {
+    family,
     user,
     checkAuth,
     logout,
-    getUserInfo
+    getUserInfo,
+    getMemberInfo
 }

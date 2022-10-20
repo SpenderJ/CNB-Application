@@ -47,6 +47,17 @@ class Family(Resource):
         return {"msg": "Family created", "status": 200}
 
     @authenticated
+    def patch(self, family_id):
+        field = request.args["field"]
+        info = request.json["value"]
+        response = family.update_field_info(family_id, field, info)
+
+        return {
+            "msg": "success",
+            "family": model_to_dict(response),
+        }
+
+    @authenticated
     def put(self):
         family_id = request.args.get("family_id")
         family.update_family(

@@ -74,6 +74,13 @@ def create_family(
     return family
 
 
+def update_field_info(family_id: str, field: str, info: str) -> Family:
+    family = get_family_via_id(family_id)
+    setattr(family, field, info)
+    family.save()
+    return family
+
+
 def update_family(
     family_id: str,
     first_name: Optional[str],
