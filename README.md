@@ -7,6 +7,16 @@ It allows you to register memberships, create rents, register boats to a ponton,
 
 This project is currently in development.
 
+## Code Quality
+
+yamllint.................................................................Passed
+flake8...................................................................Passed
+mypy.....................................................................Passed
+isort....................................................................Passed
+black....................................................................Passed
+spectral-lint............................................................Passed
+
+
 ## Project Screen Shot(s) 👀
 
 <img width="1430" alt="Screenshot 2022-10-05 at 23 50 52" src="https://user-images.githubusercontent.com/29426441/194170711-dd2afda1-6c69-4391-a047-e4097ae01a7b.png">
