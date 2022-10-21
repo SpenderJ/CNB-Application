@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import rq_dashboard
 from flask import Flask
 from flask_cors import CORS
@@ -11,7 +13,7 @@ from .storage import create_storage_gw
 
 def create_app(api=True):
     app = Flask(__name__)
-    CORS(app, resources={r"*": {"origins": "*"}}, supports_credentials=True)
+    CORS(app, resources={r'*': {'origins': '*'}}, supports_credentials=True)
     app.config.from_object(flask_config)
     create_email_auth(app)
     create_storage_gw(app)
@@ -20,7 +22,7 @@ def create_app(api=True):
         register_api(app)
 
     app.config.from_object(rq_dashboard.default_settings)
-    app.config["REDIS_URL"] = REDIS_URL
-    app.register_blueprint(rq_dashboard.blueprint, url_prefix="/jobs")
+    app.config['REDIS_URL'] = REDIS_URL
+    app.register_blueprint(rq_dashboard.blueprint, url_prefix='/jobs')
 
     return app

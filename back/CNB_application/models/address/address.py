@@ -1,13 +1,12 @@
+from __future__ import annotations
+
+from CNB_application.core import db
+from CNB_application.models.membership import Family
 from peewee import CharField
+from peewee import ForeignKeyField
 from peewee import IntegerField
 from peewee import Model
 from peewee import PrimaryKeyField
-from peewee import ForeignKeyField
-from typing import Optional
-
-from CNB_application.models.membership import Family
-
-from CNB_application.core import db
 
 
 class Address(Model):
@@ -20,11 +19,11 @@ class Address(Model):
 
     def update_address(
         self,
-        address: Optional[str],
-        city: Optional[str],
-        zip_code: Optional[int],
-        country: Optional[str],
-    ):
+        address: str | None,
+        city: str | None,
+        zip_code: int | None,
+        country: str | None,
+    ) -> None:
         self.address = address if address else self.address
         self.city = city if city else self.city
         self.zip_code = zip_code if zip_code else self.zip_code

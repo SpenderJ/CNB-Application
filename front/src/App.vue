@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    
+
     <v-app>
 
       <v-snackbar :value="true" v-for="notif in notificationsStore.notifications" :key="notif.id" :id="notif.id"
@@ -36,7 +36,7 @@
       <app-footer :background="!transparentFooter" v-if="loaded"></app-footer>
 
     </v-app>
-    
+
   </div>
 </template>
 

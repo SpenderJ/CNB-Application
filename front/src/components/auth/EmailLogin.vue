@@ -1,5 +1,5 @@
 <template>
-    
+
     <v-layout column align-center>
         <v-card class="expand-transition" style="background-color: transparent" elevation="0"
                 :height="signUp ? 380 : 230">
@@ -124,7 +124,7 @@
             Already have an account ? Log in.
         </v-btn>
     </v-layout>
-    
+
 </template>
 
 <script>

@@ -1,5 +1,5 @@
 <template>
-    
+
     <v-hover v-slot:default="{ hover }">
         <a :href="stack.link" target="_blank" class="link">
             <v-card :class="hover ? 'hover mx-2' : 'ease mx-2'" color="transparent" elevation="0">
@@ -19,7 +19,7 @@
             </v-card>
         </a>
     </v-hover>
-    
+
 </template>
 
 <script>

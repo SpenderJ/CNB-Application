@@ -1,3 +1,5 @@
-from .family import Family
-from .membership import Membership
-from .membership import MembershipType
+from __future__ import annotations
+
+from .family import Family  # noqa: F401
+from .membership import Membership  # noqa: F401
+from .membership import MembershipType  # noqa: F401

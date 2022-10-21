@@ -1,5 +1,5 @@
 <template>
-    
+
     <v-parallax dark src="../../assets/beauvallon_sea.jpeg" class="mb-5 bottom-slant" height="500">
         <v-row align="center" justify="center">
             <v-col class="text-center" cols="12">
@@ -29,7 +29,7 @@
             </v-col>
         </v-row>
     </v-parallax>
-    
+
 </template>
 
 <script>

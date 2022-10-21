@@ -1,11 +1,12 @@
+from __future__ import annotations
+
+from CNB_application.core import db
 from peewee import BooleanField
 from peewee import CharField
 from peewee import DateTimeField
 from peewee import Model
 from peewee import PrimaryKeyField
 from peewee import TextField
-
-from CNB_application.core import db
 
 
 class User(Model):
@@ -22,16 +23,16 @@ class User(Model):
 
     def get_identity(self):
         return {
-            "id": self.id,
-            "first_name": self.first_name,
-            "last_name": self.last_name,
-            "picture": self.picture,
-            "email": self.email,
+            'id': self.id,
+            'first_name': self.first_name,
+            'last_name': self.last_name,
+            'picture': self.picture,
+            'email': self.email,
         }
 
     def get_data(self):
         identity = self.get_identity()
-        identity["name"] = "{} {}".format(self.first_name, self.last_name)
+        identity['name'] = f'{self.first_name} {self.last_name}'
         return identity, self.account_activated, self.first_login
 
     class Meta:

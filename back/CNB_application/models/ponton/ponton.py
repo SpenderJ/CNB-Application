@@ -1,21 +1,20 @@
-from datetime import datetime
-from typing import Optional
+from __future__ import annotations
 
+from datetime import datetime
+
+from CNB_application.core import db
+from CNB_application.exceptions import InvalidDateFormat
+from CNB_application.models.membership import Family
 from peewee import DateTimeField
+from peewee import ForeignKeyField
 from peewee import IntegerField
 from peewee import Model
 from peewee import PrimaryKeyField
-from peewee import ForeignKeyField
-
-from CNB_application.exceptions import *
-from CNB_application.models.membership import Family
-
-from CNB_application.core import db
 
 
 class Ponton(Model):
     id = PrimaryKeyField()
-    family = ForeignKeyField(Family, backref="pontons")
+    family = ForeignKeyField(Family, backref='pontons')
     date_start = DateTimeField()
     date_end = DateTimeField()
     boat_size = IntegerField()
@@ -25,19 +24,19 @@ class Ponton(Model):
 
     def update_ponton(
         self,
-        boat_size: Optional[int],
-        date_start: Optional[str],
-        date_end: Optional[str],
-    ):
+        boat_size: int | None,
+        date_start: str | None,
+        date_end: str | None,
+    ) -> None:
         if date_start:
             try:
-                date_start = datetime.strptime(date_start, "%Y-%m-%d")
+                date_start = datetime.strptime(date_start, '%Y-%m-%d')  # type: ignore
                 self.date_start = date_start
             except (ValueError, TypeError):
                 raise InvalidDateFormat
         if date_end:
             try:
-                date_end = datetime.strptime(date_end, "%Y-%m-%d")
+                date_end = datetime.strptime(date_end, '%Y-%m-%d')  # type: ignore
                 self.date_end = date_end
             except (ValueError, TypeError):
                 raise InvalidDateFormat

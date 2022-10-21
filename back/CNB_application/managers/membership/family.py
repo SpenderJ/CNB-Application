@@ -1,8 +1,9 @@
-from peewee import DoesNotExist
-from typing import Optional
+from __future__ import annotations
 
-from CNB_application.exceptions import *
+from CNB_application.exceptions import FamilyNotFound
+from CNB_application.exceptions import FamilyIDNotFound
 from CNB_application.models.membership.family import Family
+from peewee import DoesNotExist
 
 
 def get_family_via_id(family_id: str) -> Family:
@@ -40,18 +41,14 @@ def get_all_families() -> list[Family]:
         ) = family.get_data()
         families.append(
             {
-                "first_name": first_name,
-                "last_name": last_name,
-                "email": email,
-                "phone_number": phone_number,
-                "benefactor_member": benefactor_member,
-                "parking": parking,
-            }
+                'first_name': first_name,
+                'last_name': last_name,
+                'email': email,
+                'phone_number': phone_number,
+                'benefactor_member': benefactor_member,
+                'parking': parking,
+            },
         )
-    logger.debug(
-        "Get all familys from db. Number of families : {}".format(len(families))
-    )
-
     return families
 
 
@@ -83,12 +80,12 @@ def update_field_info(family_id: str, field: str, info: str) -> Family:
 
 def update_family(
     family_id: str,
-    first_name: Optional[str],
-    last_name: Optional[str],
-    email: Optional[str],
-    phone_number: Optional[str],
-    benefactor_member: Optional[bool],
-    parking: Optional[bool],
+    first_name: str | None,
+    last_name: str | None,
+    email: str | None,
+    phone_number: str | None,
+    benefactor_member: bool | None,
+    parking: bool | None,
 ) -> Family:
     family = get_family_via_id(family_id)
     family.update_family(

@@ -1,6 +1,6 @@
 <template>
     <div class="reset-password" v-if="loaded">
-        
+
         <v-img src="../../assets/cnb_background.jpeg" alt="banner" class="banner"></v-img>
         <v-container class="reset-password">
             <v-layout row justify-center align-center fill-height>
@@ -48,7 +48,7 @@
                 </v-flex>
             </v-layout>
         </v-container>
-        
+
     </div>
 </template>
 

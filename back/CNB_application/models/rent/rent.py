@@ -1,50 +1,50 @@
+from __future__ import annotations
+
 import enum
 from datetime import datetime
 
+from CNB_application.core import db
+from CNB_application.exceptions import InvalidDateFormat
+from CNB_application.exceptions import InvalidRentingType
+from CNB_application.models.membership import Family
 from peewee import CharField
 from peewee import DateTimeField
+from peewee import ForeignKeyField
 from peewee import IntegerField
 from peewee import Model
 from peewee import PrimaryKeyField
-from peewee import ForeignKeyField
-from typing import Optional
-
-from CNB_application.models.membership import Family
-
-from CNB_application.exceptions import *
-from CNB_application.core import db
 
 
 class RentingType(str, enum.Enum):
-    HB16 = "HB16"
-    TWIXXY = "Twixxy"
-    DRAGOON = "Dragoon"
-    WINDSURF = "Windsurf"
-    FOIL = "Foil"
-    OPTIMIST = "Optimist"
-    PADDLE = "Paddle"
+    HB16 = 'HB16'
+    TWIXXY = 'Twixxy'
+    DRAGOON = 'Dragoon'
+    WINDSURF = 'Windsurf'
+    FOIL = 'Foil'
+    OPTIMIST = 'Optimist'
+    PADDLE = 'Paddle'
 
 
 class Rent(Model):
     id = PrimaryKeyField()
-    family = ForeignKeyField(Family, backref="rents")
+    family = ForeignKeyField(Family, backref='rents')
     renting_type = CharField()
     date = DateTimeField()
     time_in_minutes = IntegerField()
 
     def update_rent(
         self,
-        renting_type: Optional[str],
-        date: Optional[str],
-        time_in_minutes: Optional[str],
-    ):
+        renting_type: str | None,
+        date: str | None,
+        time_in_minutes: str | None,
+    ) -> None:
         if renting_type and renting_type in RentingType:
             self.renting_type = renting_type
         else:
             raise InvalidRentingType
         if date:
             try:
-                date = datetime.strptime(date, "%Y-%m-%d")
+                date = datetime.strptime(date, '%Y-%m-%d')  # type: ignore
                 self.date = date
             except (ValueError, TypeError):
                 raise InvalidDateFormat

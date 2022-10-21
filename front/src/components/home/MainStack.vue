@@ -1,5 +1,5 @@
 <template>
-    
+
     <v-hover v-slot:default="{ hover }">
         <v-row align="center" justify="center">
             <v-col align-self="end" cols="3" v-if="!stack.reverse">
@@ -25,7 +25,7 @@
             </v-col>
         </v-row>
     </v-hover>
-    
+
 </template>
 
 <script>

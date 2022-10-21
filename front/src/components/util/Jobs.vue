@@ -1,6 +1,6 @@
 <template>
   <div class="jobs">
-    
+
     <v-snackbar v-model="jobs_store.jobs.length > 0" bottom :timeout="0" multi-line class="snackbar-progress">
       <v-layout row wrap>
         <div v-for="job in jobs_store.jobs" :key="job.id" class="jobs-progress">
@@ -14,7 +14,7 @@
         </div>
       </v-layout>
     </v-snackbar>
-    
+
   </div>
 </template>
 

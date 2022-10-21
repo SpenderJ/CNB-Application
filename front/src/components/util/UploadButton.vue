@@ -1,5 +1,5 @@
 <template>
-    
+
     <v-tooltip right>
         <template v-slot:activator="{ on }">
             <div class="upload-btn">
@@ -24,7 +24,7 @@
         </template>
         <span>{{tooltip}}</span>
     </v-tooltip>
-    
+
 </template>
 
 <script>

@@ -1,6 +1,6 @@
 <template>
   <div class="login" v-if="loaded">
-    
+
     <v-img src="../../assets/cnb_background.jpeg" alt="banner" class="banner"></v-img>
     <v-container class="login">
       <v-layout row justify-center align-center fill-height>
@@ -9,16 +9,16 @@
               <v-card flat id="card" class="pa-5 expand-transition" :elevation="hover ? 12 : 5">
                 <v-card-text class="title">Log in to connect to the CNB dashboard!</v-card-text>
                 <v-card-text primary-title>
-    
+
                   <email-login :token="$route.params.token"></email-login>
-    
+
                 </v-card-text>
               </v-card>
           </v-hover>
         </v-flex>
       </v-layout>
      </v-container>
-    
+
   </div>
 </template>
 

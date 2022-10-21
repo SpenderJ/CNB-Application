@@ -1,12 +1,17 @@
+from __future__ import annotations
+
 import time
 
-from flask import Blueprint, current_app, g, request
+from CNB_application.api.errors import register_errors
+from CNB_application.core import db
+from CNB_application.core import logger
+from flask import Blueprint
+from flask import current_app
+from flask import g
+from flask import request
 from flask_restful import Api
 
-from CNB_application.api.errors import register_errors
-from CNB_application.core import logger, db
-
-api_bp = Blueprint("api", __name__)
+api_bp = Blueprint('api', __name__)
 
 
 class AdvancedApi(Api):
@@ -14,7 +19,7 @@ class AdvancedApi(Api):
         for val in current_app.error_handler_spec.values():
             for handler in val.values():
                 registered_error_handlers = list(
-                    filter(lambda x: isinstance(e, x), handler.keys())
+                    filter(lambda x: isinstance(e, x), handler.keys()),
                 )
                 if len(registered_error_handlers) > 0:
                     raise e
@@ -35,18 +40,20 @@ def register_api(app):
         db.close()
         diff = time.time() - g.start
         logger.info(
-            "[Request time] Path : {} {} | Time : {}s".format(
-                request.method, request.full_path, diff
-            )
+            '[Request time] Path : {} {} | Time : {}s'.format(
+                request.method,
+                request.full_path,
+                diff,
+            ),
         )
 
-    import CNB_application.api.address
-    import CNB_application.api.membership
-    import CNB_application.api.social
-    import CNB_application.api.utils
+    import CNB_application.api.address  # noqa: F401
+    import CNB_application.api.membership  # noqa: F401
+    import CNB_application.api.social  # noqa: F401
+    import CNB_application.api.utils  # noqa: F401
 
     register_errors(api_bp)
 
-    app.register_blueprint(api_bp, url_prefix="/api/v1")
+    app.register_blueprint(api_bp, url_prefix='/api/v1')
 
-    logger.debug("Blueprints successfully registered.")
+    logger.debug('Blueprints successfully registered.')

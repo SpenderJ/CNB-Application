@@ -1,6 +1,6 @@
 <template>
     <div class="my-account">
-        
+
         <v-img src="../assets/cnb_background.jpeg" alt="background" class="background"></v-img>
         <v-container class="container" v-if="loaded">
             <modify-account
@@ -13,7 +13,7 @@
                     :user="user"
             ></view-account>
         </v-container>
-        
+
     </div>
 </template>
 

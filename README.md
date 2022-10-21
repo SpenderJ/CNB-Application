@@ -1,4 +1,4 @@
-## 🏄 Nautic Club website 🏄 
+## 🏄 Nautic Club website 🏄
 
 An application designed for a nautic club, with the final goal to make the whole administration process easier.
 It allows you to register memberships, create rents, register boats to a ponton, fill-up sailing programs...
@@ -13,7 +13,7 @@ This project is currently in development.
 
 ## Reflection 👍
 
-This is a side project as a technical challenge to design and implement a powerfull tool to answer all the different needs, the nautic club I grew up at, could face. Project goals included using different technologies than the one I use on a daily bases at BackMarket. While familiarizing myself with documentation for new features and new design patterns.  
+This is a side project as a technical challenge to design and implement a powerfull tool to answer all the different needs, the nautic club I grew up at, could face. Project goals included using different technologies than the one I use on a daily bases at BackMarket. While familiarizing myself with documentation for new features and new design patterns.
 
 One of the main challenges is designing about the Domain Driven Design about the app. This lead me to spend a few days on designing it and prepping all the differennt usecases that the tool should be ready to face.
 

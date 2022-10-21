@@ -1,12 +1,11 @@
+from __future__ import annotations
+
+from CNB_application.core import db
+from CNB_application.models.membership import Family
+from peewee import ForeignKeyField
 from peewee import IntegerField
 from peewee import Model
 from peewee import PrimaryKeyField
-from peewee import ForeignKeyField
-from typing import Optional
-
-from CNB_application.models.membership import Family
-
-from CNB_application.core import db
 
 
 class Drink(Model):
@@ -29,10 +28,13 @@ class Drink(Model):
         self.number_of_card += 1
         self.drinks_left += 10
         self.save()
+        return True
 
     def update_drink_card(
-        self, drinks_left: Optional[int], number_of_card: Optional[int]
-    ):
+        self,
+        drinks_left: int | None,
+        number_of_card: int | None,
+    ) -> None:
         self.drinks_left = drinks_left if drinks_left else self.drinks_left
         self.number_of_card = number_of_card if number_of_card else self.number_of_card
         self.save()

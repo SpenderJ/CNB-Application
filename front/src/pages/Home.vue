@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    
+
     <v-container fluid class="pa-0">
       <v-row no-gutters justify="center" align="center">
 
@@ -49,7 +49,7 @@
 
       </v-row>
     </v-container>
-    
+
   </div>
 </template>
 

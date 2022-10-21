@@ -1,20 +1,23 @@
-from redis import StrictRedis, Redis
+from __future__ import annotations
+
+from redis import Redis  # type: ignore
+from redis import StrictRedis
 from rq import Queue
 
 from .config import config
 
-REDIS_URL = config["cache"].get("url", "redis://localhost:6379/1")
+REDIS_URL = config['cache'].get('url', 'redis://localhost:6379/1')
 
 cache = StrictRedis(
-    host=config["cache"].get("host", "localhost"),
-    password=config["cache"].get("password", None),
+    host=config['cache'].get('host', 'localhost'),
+    password=config['cache'].get('password', None),
     db=1,
     decode_responses=True,
 )
 
 broker = Redis(
-    host=config["cache"].get("host", "localhost"),
-    password=config["cache"].get("password", None),
+    host=config['cache'].get('host', 'localhost'),
+    password=config['cache'].get('password', None),
     db=1,
 )
 

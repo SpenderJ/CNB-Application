@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    
+
     <v-toolbar fixed :class="transparentHeader ? 'menu-header-transparent elevation-0' : 'menu-header elevation-5'">
 
       <v-toolbar-items>
@@ -55,7 +55,7 @@
         <span>Close</span>
       </v-tooltip>
     </v-snackbar>
-    
+
   </div>
 </template>
 

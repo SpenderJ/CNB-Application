@@ -1,5 +1,5 @@
 <template>
-    
+
     <v-slide-x-transition>
         <v-menu v-model="menu" :close-on-content-click="false" :nudge-width="250" offset-x offset-y>
             <template v-slot:activator="{ on }">
@@ -47,7 +47,7 @@
             </v-list>
         </v-menu>
     </v-slide-x-transition>
-    
+
 </template>
 
 <script>

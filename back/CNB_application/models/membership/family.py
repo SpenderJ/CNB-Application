@@ -1,10 +1,10 @@
+from __future__ import annotations
+
+from CNB_application.core import db
 from peewee import BooleanField
 from peewee import CharField
 from peewee import Model
 from peewee import PrimaryKeyField
-from typing import Optional
-
-from CNB_application.core import db
 
 
 class Family(Model):
@@ -26,13 +26,13 @@ class Family(Model):
 
     def update_family(
         self,
-        first_name: Optional[str],
-        last_name: Optional[str],
-        email: Optional[str],
-        phone_number: Optional[str],
-        benefactor_member: Optional[bool],
-        parking: Optional[bool],
-    ):
+        first_name: str | None,
+        last_name: str | None,
+        email: str | None,
+        phone_number: str | None,
+        benefactor_member: bool | None,
+        parking: bool | None,
+    ) -> None:
         self.first_name = first_name if first_name else self.first_name
         self.last_name = last_name if last_name else self.last_name
         self.email = email if email else self.email
@@ -55,14 +55,14 @@ class Family(Model):
 
     def get_family(self):
         return {
-            "first_name": self.first_name,
-            "last_name": self.last_name,
-            "email": self.email,
-            "phone_number": self.phone_number,
+            'first_name': self.first_name,
+            'last_name': self.last_name,
+            'email': self.email,
+            'phone_number': self.phone_number,
         }
 
     class Meta:
-        indexes = ((("first_name", "last_name"), True),)
+        indexes = ((('first_name', 'last_name'), True),)
         database = db
 
 

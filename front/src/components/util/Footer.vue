@@ -1,5 +1,5 @@
 <template>
-    
+
     <v-footer color="transparent" padless style="width: 100%">
         <v-img src="../../assets/beauvallon_sea.jpeg" alt="banner" class="banner" v-if="background"></v-img>
         <v-card flat tile class="white--text text-center" color="transparent" style="width: 100%">
@@ -16,7 +16,7 @@
             </v-card-text>
         </v-card>
     </v-footer>
-    
+
 </template>
 
 <script>

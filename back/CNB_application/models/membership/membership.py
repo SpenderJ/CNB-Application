@@ -1,27 +1,27 @@
-import enum
+from __future__ import annotations
+
 import datetime
-
-from peewee import CharField
-from peewee import DateTimeField
-from peewee import Model
-from peewee import PrimaryKeyField
-from peewee import ForeignKeyField
-from typing import Optional
-
-from CNB_application.exceptions import *
-from CNB_application.models.membership import Family
+import enum
 
 from CNB_application.core import db
+from CNB_application.exceptions import MembershipTypeNotFound
+from CNB_application.exceptions import InvalidDateFormat
+from CNB_application.models.membership import Family
+from peewee import CharField
+from peewee import DateTimeField
+from peewee import ForeignKeyField
+from peewee import Model
+from peewee import PrimaryKeyField
 
 
 class MembershipType(str, enum.Enum):
-    SEASON = "Season"
-    WEEKLY = "Weekly"
+    SEASON = 'Season'
+    WEEKLY = 'Weekly'
 
 
 class Membership(Model):
     id = PrimaryKeyField()
-    family = ForeignKeyField(Family, backref="memberships")
+    family = ForeignKeyField(Family, backref='memberships')
     membership_type = CharField()
     date_start = DateTimeField()
     date_end = DateTimeField()
@@ -37,8 +37,10 @@ class Membership(Model):
         self.save()
 
     def update_membership(
-        self, membership_type: Optional[str], date_start: Optional[str]
-    ):
+        self,
+        membership_type: str | None,
+        date_start: str | None,
+    ) -> None:
         if membership_type:
             if membership_type in MembershipType:
                 self.membership_type = membership_type
@@ -46,7 +48,7 @@ class Membership(Model):
                 raise MembershipTypeNotFound
         if date_start:
             try:
-                date_start = datetime.datetime.strptime(date_start, "%Y-%m-%d")
+                date_start = datetime.datetime.strptime(date_start, '%Y-%m-%d')  # type: ignore
                 self.date_start = date_start
                 self.set_end_date()
             except (ValueError, TypeError):
@@ -55,10 +57,10 @@ class Membership(Model):
 
     def verify_membership_status(self, date_event: str) -> bool:
         try:
-            date_event = datetime.datetime.strptime(date_event, "%Y-%m-%d")
+            date_event = datetime.datetime.strptime(date_event, '%Y-%m-%d')  # type: ignore
         except (ValueError, TypeError):
             raise InvalidDateFormat
-        return self.date_start <= date_event <= self.date_end
+        return True if self.date_start <= date_event <= self.date_end else False
 
     class Meta:
         database = db

@@ -1,0 +1,58 @@
+default_stages: [commit]
+default_language_version:
+  python: python3.10
+repos:
+  - repo: https://github.com/adrienverge/yamllint
+    rev: v1.28.0
+    hooks:
+      - id: yamllint
+        exclude: ^(deployment)
+  - repo: https://gitlab.com/pycqa/flake8
+    rev: 3.9.2
+    hooks:
+      - id: flake8
+        args:
+          [
+            "--select=F821,F812,F823,F841,F401,E251,E221,W601,F601,F811,E712,E713,E714,E701,E702,E703",
+          ]
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v0.982
+    hooks:
+      - id: mypy
+        args: ["--config-file", "./setup.cfg"]
+  - repo: https://github.com/timothycrosley/isort
+    rev: 5.10.1
+    hooks:
+      - id: isort
+        args: [--diff]
+        exclude: ^(migrations)
+  - repo: https://github.com/psf/black
+    rev: 22.10.0
+    hooks:
+      - id: black
+        args: [--diff]
+        exclude: ^(migrations)
+  - repo: https://github.com/PyCQA/bandit
+    rev: 1.7.4
+    hooks:
+      - id: bandit
+        # Print encountered issues
+        verbose: true
+        args:
+          # Medium and High Severity
+          - "-ll"
+          - "-x"
+          # Exclude found test /conventions/
+          - "*tests.py,*/tests*/*,*/test.py,*/test_*.py"
+          - "--format"
+          # Output to terminal, with nice ANSI escape codes for colors
+          - "screen"
+          # Force output buffering, while preserving the colors offered by '-f screen'
+          - "--quiet"
+  - repo: local
+    hooks:
+      - id: spectral-lint
+        name: spectral-lint
+        entry: docker-compose -f docker-compose.openapi.yml run --rm -T api-tools yarn lint
+        files: 'docs/openapi/.*\.yaml'
+        language: system

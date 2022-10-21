@@ -1,11 +1,15 @@
-from peewee import DoesNotExist
-from typing import Optional
+from __future__ import annotations
+
 from datetime import datetime
 
-from CNB_application.exceptions import *
-from CNB_application.models.membership import Membership
+from CNB_application.exceptions import InvalidDateFormat
+from CNB_application.exceptions import MembershipNotFound
+from CNB_application.exceptions import MembershipTypeNotFound
+from CNB_application.exceptions import UserNotFound
 from CNB_application.models.membership import Family
+from CNB_application.models.membership import Membership
 from CNB_application.models.membership import MembershipType
+from peewee import DoesNotExist
 
 
 def get_membership(membership_id: str) -> Membership:
@@ -24,24 +28,18 @@ def get_all_memberships() -> list[Membership]:
         family, membership_type, date_start, date_end = membership.get_data()
         memberships.append(
             {
-                "family": family,
-                "membership_type": membership_type,
-                "date_start": date_start,
-                "date_end": date_end,
-            }
+                'family': family,
+                'membership_type': membership_type,
+                'date_start': date_start,
+                'date_end': date_end,
+            },
         )
-    logger.debug(
-        "Get all memberships from db. Number of memberships : {}".format(
-            len(memberships)
-        )
-    )
-
     return memberships
 
 
 def get_memberships_by_family(family_id: str) -> list[Membership]:
     memberships = []
-    query = Membership.select().where((Membership.family.id == family_id))
+    query = Membership.select().where(Membership.family.id == family_id)
 
     if len(query == 0):
         raise UserNotFound
@@ -49,38 +47,38 @@ def get_memberships_by_family(family_id: str) -> list[Membership]:
         family, membership_type, date_start, date_end = membership.get_data()
         memberships.append(
             {
-                "family": family,
-                "membership_type": membership_type,
-                "date_start": date_start,
-                "date_end": date_end,
-            }
+                'family': family,
+                'membership_type': membership_type,
+                'date_start': date_start,
+                'date_end': date_end,
+            },
         )
-    logger.debug(
-        "Get all memberships for family {}. Number of memberships : {}".format(
-            family.last_name, len(memberships)
-        )
-    )
     return memberships
 
 
-def create_membership(family: Family, membership_type: str, date_start: str):
+def create_membership(family: Family, membership_type: str, date_start: str) -> Membership:
     try:
-        date_start = datetime.strptime(date_start, "%Y-%m-%d")
+        date_start = datetime.strptime(date_start, '%Y-%m-%d')  # type: ignore
     except (ValueError, TypeError):
         raise InvalidDateFormat
     if membership_type not in MembershipType:
         raise MembershipTypeNotFound
     membership_object = Membership.create(
-        family=family, membership_type=membership_type, date_start=date_start
+        family=family,
+        membership_type=membership_type,
+        date_start=date_start,
     )
     membership_object.set_end_date()
     return membership_object
 
 
 def update_membership(
-    membership: Membership, membership_type: Optional[str], date_start: Optional[str]
+    membership: Membership,
+    membership_type: str | None,
+    date_start: str | None,
 ) -> Membership:
-    membership.update_membership(membership_type=membership_type, date_start=date_start)
+    membership.update_membership(
+        membership_type=membership_type, date_start=date_start)
     return membership
 
 

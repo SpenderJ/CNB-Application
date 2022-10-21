@@ -1,5 +1,5 @@
 <template>
-    
+
     <v-card color="transparent" elevation="0">
         <v-layout justify-center column align-center>
             <v-card-text class="title font-weight-bold text-center primary--text">
@@ -8,7 +8,7 @@
             <v-img :src="auth.logo" alt="vue" class="logo"></v-img>
         </v-layout>
     </v-card>
-    
+
 </template>
 
 <script>
