@@ -2,11 +2,8 @@ from __future__ import annotations
 
 from CNB_application.core import logger
 
-from .users import *  # noqa: F401
-from .passwords import *  # noqa: F401
 
-
-class APIError(Exception):  # type: ignore
+class APIError(Exception):
     status_code = 500
 
     def __init__(self, prefix, message, status_code=None):
@@ -18,3 +15,7 @@ class APIError(Exception):  # type: ignore
 
     def to_dict(self):
         return {'error': self.message}
+
+
+from .users import *  # noqa: F401
+from .passwords import *  # noqa: F401

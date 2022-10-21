@@ -85,7 +85,7 @@ export default new Router({
       component: Members
     },
     {
-      path: "/members/:id",
+      path: "/member/:id",
       name: "member",
       meta: {
         transparentFooter: true
