@@ -79,7 +79,8 @@
         scrolled: false,
         displayMenu: false,
         links: [
-          {text: 'Figures', route: '/api'},
+          {text: 'Home', route: '/'},
+          {text: 'Figures', route: '/'},
           {text: 'Manage Members', route: '/members'},
         ]
       }

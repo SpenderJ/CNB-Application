@@ -27,7 +27,7 @@
         },
         data: () => ({
             links: [
-                {icon: 'fab fa-vuejs', link: 'https://www.club-nautique-beauvallon.fr/'},
+                {icon: 'fab fa-github', link: 'https://www.club-nautique-beauvallon.fr/'},
                 {icon: 'fab fa-facebook', link: 'https://www.facebook.com/profile.php?id=100009301527414'},
             ]
         })
