@@ -7,6 +7,9 @@ from peewee import DoesNotExist
 
 
 def get_family_via_id(family_id: str) -> Family:
+    print("HELLO JULES")
+    print(family_id)
+    print("HELLO JULES")
     try:
         family = Family.get(Family.id == family_id)
         return family

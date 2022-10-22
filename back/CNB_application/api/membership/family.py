@@ -26,7 +26,7 @@ class Family(Resource):
     @authenticated
     def get(self, family_id):
         response = family.get_family_via_id(family_id=family_id)
-        return {'family': model_to_dict(response)}
+        return {'family': model_to_dict(response), 'status': 200}
 
     @authenticated
     def post(self):

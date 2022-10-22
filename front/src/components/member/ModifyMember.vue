@@ -8,12 +8,12 @@
             </v-avatar>
 
             <v-card color="transparent" elevation="0">
-                <v-card-text class="display-1 white--text mb-5">{{ member.profile.first_name + " " + member.profile.last_name }}</v-card-text>
+                <v-card-text class="display-1 white--text mb-5">{{ member.first_name + " " + member.last_name }}</v-card-text>
 
                 <v-card-text class="text-start" v-for="field in fields" :key="field.field">
                     <v-row dense>
                         <v-col cols="8">
-                            <span class="primary--text font-weight-light">{{ field.text }}</span>
+                            <span class="white--text">{{ field.text }}</span>
                         </v-col>
                         <v-col cols="4" class="py-0">
                             <v-row dense justify="end" align="center" v-if="!field.modify">
@@ -25,7 +25,7 @@
                             </v-row>
                             <v-row dense justify="end" align="center" v-else>
                                 <v-btn icon text small
-                                       @click="field.modify = false; field.value = member.profile[field.field]">
+                                       @click="field.modify = false; field.value = member[field.field]">
                                     <v-icon small color="error">
                                         cancel
                                     </v-icon>
@@ -46,24 +46,7 @@
                             clearable
                             class="my-0 py-0 title"
                     ></v-text-field>
-                    <span class="white--text title" v-else>{{ member.profile[field.field] }}</span>
-                </v-card-text>
-
-                <v-card-text class="text-start pb-0">
-                    <v-row dense>
-                        <v-col cols="8">
-                            <span class="primary--text font-weight-light">Email</span>
-                        </v-col>
-                        <v-col cols="4" class="py-0">
-                            <v-row dense justify="end" align="center">
-                                <v-btn icon text small>
-                                    <v-icon small color="white">
-                                        edit
-                                    </v-icon>
-                                </v-btn>
-                            </v-row>
-                        </v-col>
-                    </v-row>
+                    <span class="white--text title" v-else>{{ member[field.field] }}</span>
                 </v-card-text>
             </v-card>
 
@@ -96,18 +79,42 @@
                         value: null,
                         modify: false,
                         field: 'last_name'
+                    },
+                    {
+                        text: 'Email',
+                        value: null,
+                        modify: false,
+                        field: 'email'
+                    },
+                    {
+                        text: 'Phone Number',
+                        value: null,
+                        modify: false,
+                        field: 'phone_number'
+                    },
+                    {
+                        text: 'Benefactor Member',
+                        value: null,
+                        modify: false,
+                        field: 'benefactor_member'
+                    },
+                    {
+                        text: 'Parking',
+                        value: null,
+                        modify: false,
+                        field: 'parking'
                     }
                 ],
             }
         },
         mounted() {
             for (let i = 0; i < this.fields.length; i++) {
-                this.fields[i].value = this.member.profile[this.fields[i].field]
+                this.fields[i].value = this.member[this.fields[i].field]
             }
         },
         methods: {
             updateField(field) {
-                axios.patch(process.env.VUE_APP_API_URL + `/family/${this.member.profile.id}`,
+                axios.patch(process.env.VUE_APP_API_URL + `/family/${this.member.id}`,
                     {value: field.value},
                     {params: {field: field.field}}
                 ).then(response => {
